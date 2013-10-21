@@ -7,4 +7,4 @@ frontend/      						app/design/frontend/default/default/
 
 adminhtml      						app/design/adminhtml/default/default/
 
-skin								skin/frontend/default/default/
+skin/frontend						skin/frontend/default/default/

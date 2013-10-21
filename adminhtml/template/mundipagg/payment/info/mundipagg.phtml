@@ -1,0 +1,136 @@
+<?php
+/**
+ * Uecommerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Uecommerce EULA.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.uecommerce.com.br/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extension
+ * to newer versions in the future. If you wish to customize the extension
+ * for your needs please refer to http://www.uecommerce.com.br/ for more information
+ *
+ * @category   Uecommerce
+ * @package    Uecommerce_Mundipagg
+ * @copyright  Copyright (c) 2012 Uecommerce (http://www.uecommerce.com.br/)
+ * @license    http://www.uecommerce.com.br/
+ */
+
+/**
+ * Mundipagg Payment module
+ *
+ * @category   Uecommerce
+ * @package    Uecommerce_Mundipagg
+ * @author     Uecommerce Dev Team
+ */
+
+if(Mage::registry('current_order')) {
+    $_order = $this->getOrder();
+}
+
+if(Mage::registry('current_invoice')) {
+    $_order = $this->getInvoice()->getOrder();
+}
+
+if(Mage::registry('current_shipment')) {
+    $_order = $this->getShipment()->getOrder();
+}
+
+if(Mage::registry('current_creditmemo')) {
+    $data = Mage::registry('current_creditmemo')->getData();
+    
+    $_order = Mage::getModel('sales/order')->load($data['order_id']);
+}
+?>
+<div>
+    <p>
+    <?php 
+    $PaymentMethod = $_order->getPayment()->getAdditionalInformation('PaymentMethod');
+    
+    echo Mage::helper('mundipagg')->__('Method').': '.Mage::helper('mundipagg')->__($PaymentMethod).'<br/>';
+
+    if($PaymentMethod == '1CreditCards') {
+        if($this->getInfo()->getAdditionalInformation('CreditCardBrandEnum')) {
+            $CreditCardBrandEnum = $_order->getPayment()->getAdditionalInformation('CreditCardBrandEnum');
+
+            echo Mage::helper('mundipagg')->__('Credit Card Issuer').': '.$CreditCardBrandEnum.'<br/>';
+        }
+
+        $i = 0;
+
+        if($InstallmentCount = $this->getInfo()->getAdditionalInformation('InstallmentCount')) {
+            $InstallmentCount = $_order->getPayment()->getAdditionalInformation('InstallmentCount');
+
+            if($InstallmentCount <= 1) {
+                echo Mage::helper('mundipagg')->__('InstallmentCount').': ';
+            }
+            else {
+                echo Mage::helper('mundipagg')->__('InstallmentsCount').': ';
+            }
+            
+            echo $InstallmentCount.'x<br/>';
+
+            $i++;
+        }
+
+        if($CreditCardTransactionStatusEnum = $_order->getPayment()->getAdditionalInformation('CreditCardTransactionStatusEnum')) {
+            echo Mage::helper('mundipagg')->__('Transaction Status').': '.$CreditCardTransactionStatusEnum.'<br/>';
+        }
+
+        // Token
+        if($this->getInfo()->getAdditionalInformation('CreditCardBrandEnum_1CreditCards_token_1_1')) {
+        ?>
+            <?php echo Mage::helper('mundipagg')->__('Credit Card Issuer').': ';?>
+            <?php echo $this->getInfo()->getAdditionalInformation('CreditCardBrandEnum_1CreditCards_token_1_1');?>
+            <br/>
+        <?php
+        }
+
+        if($i == 0 && $InstallmentCount = $this->getInfo()->getAdditionalInformation('1CreditCards_new_credito_parcelamento_1_1')) {
+        ?>
+            <?php 
+            if($InstallmentCount <= 1) {
+                echo Mage::helper('mundipagg')->__('InstallmentCount').': ';
+            }
+            else {
+                echo Mage::helper('mundipagg')->__('InstallmentsCount').': ';
+            }
+            ?>
+            <?php echo $this->getInfo()->getAdditionalInformation('1CreditCards_new_credito_parcelamento_1_1').'x';?>
+            <br/>
+        <?php
+        }
+    }
+
+    if($orderKey = $_order->getPayment()->getAdditionalInformation('OrderKey')) {
+        echo Mage::helper('mundipagg')->__('OrderKey').': '.$orderKey.'<br/>';
+    }
+
+    if($ReferenceKey = $_order->getPayment()->getAdditionalInformation('ReferenceKey')) {
+        echo Mage::helper('mundipagg')->__('ReferenceKey').': '.$ReferenceKey.'<br/>';
+    }
+            
+    if($PaymentMethod == 'BoletoBancario' && $boletos = $_order->getPayment()->getAdditionalInformation('Boleto')):
+        $i = 1;
+        foreach($boletos as $id => $boleto):
+    ?> 
+        <?php if(count($boletos)>1):?>
+            <p>
+                <a href="<?php echo $boleto->BoletoUrl;?>" target="_blank"><?php echo Mage::helper('mundipagg')->__('Print boleto nº').$i;?></a>
+            </p>
+        <?php else: ?>
+            <p>
+                <a href="<?php echo $boleto->BoletoUrl;?>" target="_blank"><?php echo Mage::helper('mundipagg')->__('Print boleto');?></a>
+            </p>
+        <?php endif;?>
+    <?php
+        $i++;
+        endforeach;
+    endif;
+    ?>
+    </p>
+</div>

@@ -1,0 +1,8 @@
+# Uecommerce Mundipagg
+
+code                   				app/code/local/Uecommerce/Mundipagg/
+Uecommerce_Mundipagg.xml         	app/etc/modules/Uecommerce_Mundipagg.xml
+
+frontend/      						app/design/frontend/default/default/
+
+adminhtml      						app/design/adminhtml/default/default/

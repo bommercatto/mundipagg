@@ -1,0 +1,83 @@
+<?php
+/**
+ * Uecommerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Uecommerce EULA.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.uecommerce.com.br/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extension
+ * to newer versions in the future. If you wish to customize the extension
+ * for your needs please refer to http://www.uecommerce.com.br/ for more information
+ *
+ * @category   Uecommerce
+ * @package    Uecommerce_Mundipagg
+ * @copyright  Copyright (c) 2012 Uecommerce (http://www.uecommerce.com.br/)
+ * @license    http://www.uecommerce.com.br/
+ */
+
+/**
+ * Mundipagg Payment module
+ *
+ * @category   Uecommerce
+ * @package    Uecommerce_Mundipagg
+ * @author     Uecommerce Dev Team
+ */
+?>
+<?php echo Mage::helper('mundipagg')->__($this->getInfo()->getAdditionalInformation('PaymentMethod'));?>
+<br/>
+<?php 
+if($this->getInfo()->getAdditionalInformation('PaymentMethod') == '1CreditCards') {
+	if($this->getInfo()->getAdditionalInformation('CreditCardBrandEnum')) {
+	?>
+		<?php echo Mage::helper('mundipagg')->__('Credit Card Issuer').': ';?>
+		<?php echo $this->getInfo()->getAdditionalInformation('CreditCardBrandEnum');?>
+		<br/>
+	<?php
+	}
+	
+	// Token
+	if($this->getInfo()->getAdditionalInformation('CreditCardBrandEnum_1CreditCards_token_1_1')) {
+	?>
+		<?php echo Mage::helper('mundipagg')->__('Credit Card Issuer').': ';?>
+		<?php echo $this->getInfo()->getAdditionalInformation('CreditCardBrandEnum_1CreditCards_token_1_1');?>
+		<br/>
+	<?php
+	}
+
+	if($InstallmentCount = $this->getInfo()->getAdditionalInformation('1CreditCards_new_credito_parcelamento_1_1')) {
+	?>
+		<?php 
+		if($InstallmentCount <= 1) {
+			echo Mage::helper('mundipagg')->__('InstallmentCount').': ';
+		}
+		else {
+			echo Mage::helper('mundipagg')->__('InstallmentsCount').': ';
+		}
+		?>
+		<?php echo $this->getInfo()->getAdditionalInformation('1CreditCards_new_credito_parcelamento_1_1').'x';?>
+		<br/>
+	<?php
+	}
+}
+
+if($boletos = $this->getInfo()->getAdditionalInformation('Boleto')):
+	$i = 1;
+	foreach($boletos as $id => $boleto):
+?>
+	<p>
+		<?php if(count($boletos)>1):?>
+        	<a href="<?php echo $boleto->BoletoUrl;?>" target="_blank"><?php echo Mage::helper('mundipagg')->__('Print boleto nº').$i;?></a>
+    	<?php else:?>
+    		<a href="<?php echo $boleto->BoletoUrl;?>" target="_blank"><?php echo Mage::helper('mundipagg')->__('Print boleto');?></a>
+    	<?php endif;?>
+    </p>
+<?php
+	$i++;
+	endforeach;
+endif;
+?>

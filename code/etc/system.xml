@@ -1,0 +1,600 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Uecommerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Uecommerce EULA.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.uecommerce.com.br/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extension
+ * to newer versions in the future. If you wish to customize the extension
+ * for your needs please refer to http://www.uecommerce.com.br/ for more information
+ *
+ * @category   Uecommerce
+ * @package    Uecommerce_Mundipagg
+ * @copyright  Copyright (c) 2012 Uecommerce (http://www.uecommerce.com.br/)
+ * @license    http://www.uecommerce.com.br/
+ */
+
+/**
+ * Mundipagg Payment module
+ *
+ * @category   Uecommerce
+ * @package    Uecommerce_Mundipagg
+ * @author     Uecommerce Dev Team
+ */
+-->
+<config>
+    <sections>
+        <payment translate="label" module="payment">
+            <groups>
+                <mundipagg_standard type="group" translate="label">
+                    <label><![CDATA[MundiPagg]]></label>
+                    <sort_order>420</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment><![CDATA[<a href="http://www.uecommerce.com.br" target="_blank"><img title="Uecommerce" alt="Uecommerce" src="http://www.uecommerce.com.br/uecommerce.php"/></a></span>]]></comment>
+                    <fields>
+                        <version translate="label">
+                            <label>Version</label>
+                            <frontend_type>select</frontend_type>
+                            <frontend_model>Uecommerce_Mundipagg_Block_Adminhtml_Version</frontend_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </version>
+
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Frase que irá aparecer no seu checkout para descrever a forma de pagamento.]]></comment>
+                        </title>
+
+                        <environment translate="label">
+                            <label>Environment</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>Uecommerce_Mundipagg_Model_Source_Environment</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[<b>Development</b> = ambiente de teste<br/><b>Production</b> = ambiente de produção]]></comment>
+                        </environment>
+
+                        <debug translate="label">
+                            <label>Debug</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[O Debug permite gravar o retorno da MundiPagg nos logs do Magento (/var/log/system.log), para tal é necessário ter os logs do Magento ativados (System -> Configuration -> Advanced -> Developer -> Log Settings -> Yes)]]></comment>
+                        </debug>
+
+                        <apiUrlStaging translate="label">
+                            <label>Api URL Staging</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </apiUrlStaging>
+
+                        <merchantKeyStaging translate="label">
+                            <label>merchantKey Staging</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </merchantKeyStaging>
+
+                        <apiUrlProduction translate="label">
+                            <label>Api URL Production</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </apiUrlProduction>
+
+                        <merchantKeyProduction translate="label">
+                            <label>merchantKey Production</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>8</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </merchantKeyProduction>
+
+                        <clearsale translate="label">
+                            <label>Comunicar com ClearSale pela MundiPagg?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Para utilizar a ClearSale, é necessário contratar os serviços da ClearSale e em seguida solicitar o cadastro do anti-fraude para a loja e enviar a chave de afiliação da ClearSale para o suporte da Mundipagg.]]></comment>
+                        </clearsale>
+
+                        <payment_action translate="label">
+                            <label>Payment Action</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>Uecommerce_Mundipagg_Model_Source_PaymentAction</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[<b>AuthOnly</b> = Autorizar<br/><b>AuthAndCapture</b> = Autorizar e capturar]]></comment>
+                        </payment_action>
+
+                        <payment_methods translate="label">
+                            <label>Payment Methods</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>Uecommerce_Mundipagg_Model_Source_PaymentMethods</source_model>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Selecione as formas de pagamento que você aceita na sua loja]]></comment>
+                        </payment_methods>                
+                        
+                        <cc_types translate="label">
+                            <label>Credit Card Issuers</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>Uecommerce_Mundipagg_Model_Source_Cctypes</source_model>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Escolha as bandeiras que você aceita na sua loja]]></comment>
+                        </cc_types>
+
+                        <two_credit_cards_from translate="label">
+                            <label>Autorizo 2 Cartões de Crédito a partir de</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>13</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[]]></comment>
+                        </two_credit_cards_from>
+
+                        <three_credit_cards_from translate="label">
+                            <label>Autorizo 3 Cartões de Crédito a partir de</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>14</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[]]></comment>
+                        </three_credit_cards_from>
+
+                        <four_credit_cards_from translate="label">
+                            <label>Autorizo 4 Cartões de Crédito a partir de</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[]]></comment>
+                        </four_credit_cards_from>
+
+                        <five_credit_cards_from translate="label">
+                            <label>Autorizo 5 Cartões de Crédito a partir de</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>16</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[]]></comment>
+                        </five_credit_cards_from>
+
+                        <parcelamento translate="label">
+                            <label>Ativar parcelamento?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </parcelamento>
+ 
+                        <parcelamento_max translate="label">
+                            <label>Número de parcelas</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>Uecommerce_Mundipagg_Model_Source_Installments</source_model>
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                            <comment><![CDATA[Selecione o número de parcelas máximas sem juros que você aceita na sua loja.]]></comment>
+                        </parcelamento_max>
+
+                        <parcelamento_min translate="label">
+                            <label>Valor mínimo para habilitar parcelamento</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>22</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Caso você queira:<br/>- não ter valor mínimo para parcelar, informe 0.<br/>- parcelar a partir de um valor mínimo. Ex: Autorizando 6 parcelas e informando 100, significa que a partir de R$ 100 você aceita parcelamento em até 6 vezes.<br/>- por faixa de valores, deixe vázio e preencha os campos abaixo:]]></comment>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_min>
+
+                        <parcelamento_ate1 translate="label">
+                            <label>A vista até (não parcela até)</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>23</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[]]></comment>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_ate1>
+
+                        <parcelamento_de2 translate="label">
+                            <label>2 parcelas a partir de:</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>24</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_de2>
+
+                        <parcelamento_ate2 translate="label">
+                            <label>2 parcelas até</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_ate2>
+
+                        <parcelamento_de3 translate="label">
+                            <label>3 parcelas a partir de</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>26</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_de3>
+
+                        <parcelamento_ate3 translate="label">
+                            <label>3 parcelas até</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>27</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_ate3>
+
+                        <parcelamento_de4 translate="label">
+                            <label>4 parcelas a partir de</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>28</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_de4>
+
+                        <parcelamento_ate4 translate="label">
+                            <label>4 parcelas até</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>29</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_ate4>
+
+                        <parcelamento_de5 translate="label">
+                            <label>5 parcelas a partir de</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_de5>
+
+                        <parcelamento_ate5 translate="label">
+                            <label>5 parcelas até</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>31</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_ate5>
+
+                        <parcelamento_de6 translate="label">
+                            <label>6 parcelas a partir de</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>32</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_de6>
+
+                        <parcelamento_ate6 translate="label">
+                            <label>6 parcelas até</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>33</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_ate6>
+
+                        <parcelamento_de7 translate="label">
+                            <label>7 parcelas a partir de</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>34</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_de7>
+
+                        <parcelamento_ate7 translate="label">
+                            <label>7 parcelas até</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_ate7>
+
+                        <parcelamento_de8 translate="label">
+                            <label>8 parcelas a partir de</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>36</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_de8>
+
+                        <parcelamento_ate8 translate="label">
+                            <label>8 parcelas até</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>37</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_ate8>
+
+                        <parcelamento_de9 translate="label">
+                            <label>9 parcelas a partir de</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>38</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_de9>
+
+                        <parcelamento_ate9 translate="label">
+                            <label>9 parcelas até</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>39</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_ate9>
+
+                        <parcelamento_de10 translate="label">
+                            <label>10 parcelas a partir de</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_de10>
+
+                        <parcelamento_ate10 translate="label">
+                            <label>10 parcelas até</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>41</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_ate10>
+
+                        <parcelamento_de11 translate="label">
+                            <label>11 parcelas a partir de</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>42</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_de11>
+
+                        <parcelamento_ate11 translate="label">
+                            <label>11 parcelas até</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>43</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_ate11>
+
+                        <parcelamento_de12 translate="label">
+                            <label>12 parcelas a partir de</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number</validate>
+                            <sort_order>44</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <parcelamento>1</parcelamento>
+                            </depends>
+                        </parcelamento_de12>
+
+                        <dias_validade_boleto translate="label">
+                            <label>Boleto - Dias validade</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-digits</validate>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Quantos dias o Boleto será válido para pagamento?]]></comment>
+                        </dias_validade_boleto>
+
+                        <instrucoes_caixa translate="label">
+                            <label>Boleto - Instrucões Caixa</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>51</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Texto sobre as instruções caixa customizado por você que irá aparecer nos seus Boletos Bancários]]></comment>
+                        </instrucoes_caixa>
+                        
+                        <allowspecific translate="label">
+                            <label>Payment from Applicable Countries</label>
+                            <frontend_type>allowspecific</frontend_type>
+                            <sort_order>60</sort_order>
+                            <source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allowspecific>
+                        
+                        <specificcountry translate="label">
+                            <label>Payment from Specific Countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>61</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </specificcountry>
+
+                        <sort_order translate="label">
+                            <label>Sort Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_class>validate-number</frontend_class>
+                        </sort_order>
+                    </fields>
+                </mundipagg_standard>
+            </groups>
+        </payment>
+    </sections>
+</config>

@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Uecommerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Uecommerce EULA.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.uecommerce.com.br/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extension
+ * to newer versions in the future. If you wish to customize the extension
+ * for your needs please refer to http://www.uecommerce.com.br/ for more information
+ *
+ * @category   Uecommerce
+ * @package    Uecommerce_Mundipagg
+ * @copyright  Copyright (c) 2012 Uecommerce (http://www.uecommerce.com.br/)
+ * @license    http://www.uecommerce.com.br/
+ */
+
+/**
+ * Mundipagg Payment module
+ *
+ * @category   Uecommerce
+ * @package    Uecommerce_Mundipagg
+ * @author     Uecommerce Dev Team
+ */
+-->
+<config>
+    <modules>
+        <Uecommerce_Mundipagg>
+            <version>0.3.5</version>
+        </Uecommerce_Mundipagg>
+    </modules>
+
+    <global>
+        <models>
+            <mundipagg>
+                <class>Uecommerce_Mundipagg_Model</class>
+                <resourceModel>mundipagg_resource</resourceModel>
+            </mundipagg>
+            <mundipagg_resource>
+                <class>Uecommerce_Mundipagg_Model_Resource</class>
+                <entities>
+                    <mundipagg_customers>
+                        <table>mundipagg_customers</table>
+                    </mundipagg_customers>
+                    <mundipagg_card_on_file>
+                        <table>mundipagg_card_on_file</table>
+                    </mundipagg_card_on_file>
+                </entities>
+            </mundipagg_resource>
+        </models>
+
+        <events>
+            <sales_order_place_after>
+                <observers>
+                    <onhold_order>
+                        <type>singleton</type>
+                        <class>Uecommerce_Mundipagg_Model_Observer</class>
+                        <method>onHoldOrder</method>
+                    </onhold_order>
+                </observers>
+            </sales_order_place_after>
+        </events>
+
+        <resources>
+            <mundipagg_setup>
+                <setup>
+                    <module>Uecommerce_Mundipagg</module>
+                    <class>Uecommerce_Mundipagg_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </mundipagg_setup>
+            <mundipagg_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </mundipagg_write>
+            <mundipagg_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </mundipagg_read>
+        </resources>
+
+        <blocks>
+            <mundipagg>
+                <class>Uecommerce_Mundipagg_Block</class>
+            </mundipagg>
+            <adminhtml>
+                <rewrite>
+                    <sales_transactions_detail_grid>Uecommerce_Mundipagg_Block_Adminhtml_Sales_Transactions_Detail_Grid</sales_transactions_detail_grid>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+        
+        <helpers>
+            <mundipagg>
+                <class>Uecommerce_Mundipagg_Helper</class>
+            </mundipagg>
+        </helpers>
+    </global>
+
+    <frontend>
+        <routers>
+            <mundipagg>
+                <use>standard</use>
+                <args>
+                    <module>Uecommerce_Mundipagg</module>
+                    <frontName>mundipagg</frontName>
+                </args>
+            </mundipagg>
+        </routers>
+        <translate>
+            <modules>
+                <mundipagg>
+                    <files>
+                        <default>Uecommerce_Mundipagg.csv</default>
+                    </files>
+                </mundipagg>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <mundipagg module="Uecommerce_Mundipagg">
+                    <file>mundipagg.xml</file>
+                </mundipagg>
+            </updates>
+        </layout>
+    </frontend>
+
+    <adminhtml>
+        <translate>
+            <modules>
+                <mundipagg>
+                    <files>
+                        <default>Uecommerce_Mundipagg.csv</default>
+                    </files>
+                </mundipagg>
+            </modules>
+        </translate>
+    </adminhtml>
+
+    <admin>
+        <routers>
+            <mundipagg>
+                <use>admin</use>
+                <args>
+                    <module>Uecommerce_Mundipagg</module>
+                    <frontName>mundipagg</frontName>
+                </args>
+            </mundipagg>
+        </routers>
+    </admin>
+    
+    <default>
+        <payment>
+            <mundipagg_standard>
+                <model>mundipagg/standard</model>
+                <active>0</active>
+                <title><![CDATA[MundiPagg]]></title>
+                <allowspecific>0</allowspecific>
+                <apiUrlStaging>https://transaction.mundipaggone.com/mundipaggservice.svc?wsdl</apiUrlStaging>
+                <apiUrlProduction>https://transaction.mundipaggone.com/mundipaggservice.svc?wsdl</apiUrlProduction>
+                <payment_action>order</payment_action>
+                <clearsale>0</clearsale>
+            </mundipagg_standard>
+        </payment>
+    </default>
+</config>

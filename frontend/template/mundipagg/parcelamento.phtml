@@ -1,0 +1,7 @@
+<?php 
+$parcelamento = $this->getParcelamento();
+
+if(!empty($parcelamento)):
+?>
+<?php echo $this->__('ou')?> <strong><?php echo $parcelamento['parcelamento_max']?>x</strong> <?php echo $this->__('de'); ?> <strong><?php echo Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol(); ?> <?php echo $parcelamento['price_parcelado'];?></strong> <?php echo $this->__('s/juros');?>
+<?php endif;?>
